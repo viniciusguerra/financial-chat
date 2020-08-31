@@ -15,3 +15,7 @@ For the RabbitMQTests to run properly, RabbitMQ has to be running. The ProduceCo
 ## About the implementation
 
 About the optional item "Handle messages that are not understood or any exceptions raised within the bot", I made an OnMessageRejected event in the StockBot class that can be listened to. For now it only debugs to the console.
+
+I also didn't manage to implement:
+- Scrolling the page down automatically to view most recent messages
+- Reloading the view on every client as soon as a new message is received. Currently only the client posting messages gets its view refreshed so the other clients have to F5 until new messages arrive
