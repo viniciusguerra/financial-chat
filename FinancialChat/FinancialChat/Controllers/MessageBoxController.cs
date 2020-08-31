@@ -31,7 +31,9 @@ namespace FinancialChat.Controllers
         {
             SubmitMessage(viewModel.Message);
 
-            return RedirectToAction("Index", "Home");            
+            ViewBag.Error = "Error Message";
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

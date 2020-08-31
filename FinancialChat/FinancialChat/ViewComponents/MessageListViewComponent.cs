@@ -26,6 +26,7 @@ namespace FinancialChat.ViewComponents
             List<MessageModel> messageList = await context
                 .MessageModel.OrderBy(x => x.Timestamp)                                 // order messages by Timestamp
                 .Skip(Math.Max(0, context.MessageModel.Count() - MAX_MESSAGE_COUNT))   // get only the 50 latest messages
+                .AsNoTracking()
                 .ToListAsync();
 
             return View(messageList);

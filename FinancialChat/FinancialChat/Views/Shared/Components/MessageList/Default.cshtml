@@ -3,10 +3,10 @@
 <div class="chat-container d-flex flex-column">
     @foreach (var item in Model)
     {
-        <div class="@(User.Identity.Name == item.OwnerName ? "chat-item-self align-self-end" : "chat-item-other align-self-start")">
-            <h4>
+        <div class="message @(User.Identity.Name == item.OwnerName ? "chat-item-self align-self-end" : "chat-item-other align-self-start")">
+            <h6>
                 @Html.DisplayFor(modelItem => item.OwnerName)
-            </h4>
+            </h6>
             <p>
                 @Html.DisplayFor(modelItem => item.MessageBody)
             </p>

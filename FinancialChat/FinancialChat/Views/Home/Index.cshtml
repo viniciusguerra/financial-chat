@@ -6,8 +6,10 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    @await Component.InvokeAsync("MessageList")
-    <partial name="_MessageBox" />
+    <div class="message-container">
+        @await Component.InvokeAsync("MessageList")
+        <partial name="_MessageBox" />
+    </div>
 }
 else
 {

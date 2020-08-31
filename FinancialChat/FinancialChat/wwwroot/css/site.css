@@ -60,12 +60,14 @@ html {
 
 body {
   /* Margin bottom by footer height */
+  overflow-y: hidden;
   margin-bottom: 60px;
 }
 
 .footer {
   position: absolute;
   bottom: 0;
+  margin-bottom: 16px;
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
@@ -73,29 +75,63 @@ body {
 
 /* Chat styles
 -------------------------------------------------- */
-.chat-container {
-    overflow-x: hidden;
-    overflow-y: auto;
-    width: 100%;
-    height: 80%;
+.message-container {
+    height: calc(100vh - 120px);
 }
 
-.chat-list {
-    list-style: none;
-    padding: 0 0 0 0;
+.message-container .chat-container {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    width: 100%;
+    height: 80%;
+    background-color: lightgrey;
+    padding: 8px;
+}
+
+.message {
+    color: #000;
+    clear: both;
+    line-height: 18px;
+    font-size: 15px;
+    padding: 8px;
+    position: relative;
+    margin: 8px 0;
+    max-width: 85%;
+    word-wrap: break-word;
+    z-index: 1;
+}
+
+.message p {
+    padding-bottom: 0px;
 }
 
 .chat-item-self {
-    list-style: none;
-    background-color: aquamarine;
+    background: #e1ffc7;
+    border-radius: 5px 0px 5px 5px;
+    padding-right: 5px;
 }
 
 .chat-item-other {
-    list-style: none;
-    background-color: darkgrey;
+    background: #fff;
+    border-radius: 0px 5px 5px 5px;
+    padding-left: 5px;
 }
 
-.message-box {
-    height: 20%;
+.message-container .message-form {
+    width: 100%;
+}
+
+.message-container .message-box {
+    padding-top: 8px;
+    height: 5%;
+    width: 100%;
+}
+
+.message-container .message-input {
+    background: white;
+    border-radius: 5px 0 0 5px;
+    font-size: 16px;
+    margin: 0;
+    outline: none;
     width: 100%;
 }
