@@ -1,6 +1,8 @@
 ﻿using FinancialChat.Data;
 using FinancialChat.Models;
 using FinancialChat.Scripts.RabbitMQScripts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,34 +14,50 @@ namespace FinancialChat.Scripts
 
     public class MessagePublisher
     {
-        private readonly FinancialChatContext context;
         private readonly RabbitConsumer consumer;
+        private FinancialChatContext context;
 
-        public event MessagePublishedDelegate OnMessagePublished;        
+        public event MessagePublishedDelegate OnMessagePublished;
 
-        public MessagePublisher(FinancialChatContext context, IRabbitConsumer consumer)
+        IConfiguration configuration;
+
+        public MessagePublisher(IRabbitConsumer consumer, IConfiguration configuration)
         {
-            this.context = context;
+            this.configuration = configuration;
+
             this.consumer = consumer as RabbitConsumer;
 
             consumer.OnMessageConsumed += OnMessageConsumed;
         }
 
-        private void OnMessageConsumed(MessageModel message, string routingKey)
+        private async void OnMessageConsumed(MessageModel message, string routingKey)
         {
             if (routingKey != RabbitConstants.MESSAGE_QUEUE)
                 return;
 
-            Publish(message);
+            await Publish(message);
         }
 
         public async Task Publish(MessageModel message)
         {
-            context.MessageModel.Add(message);
+            BuildEFContext();
+
+            await context.MessageModel.AddAsync(message);
 
             await context.SaveChangesAsync();
 
             OnMessagePublished?.Invoke(message);
+        }
+
+        private void BuildEFContext()
+        {
+            DbContextOptionsBuilder<FinancialChatContext> builder = new DbContextOptionsBuilder<FinancialChatContext>();
+
+            builder.UseSqlServer(configuration.GetConnectionString("FinancialChatContext"));
+
+            DbContextOptions<FinancialChatContext> options = builder.Options;
+
+            context = new FinancialChatContext(options);
         }
     }
 }

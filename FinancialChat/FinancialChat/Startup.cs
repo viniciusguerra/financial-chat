@@ -40,7 +40,7 @@ namespace FinancialChat
 
             services.AddDbContext<FinancialChatContext>(options =>
                     options.UseSqlServer(
-                        Configuration.GetConnectionString("FinancialChatContext")), ServiceLifetime.Singleton);
+                        Configuration.GetConnectionString("FinancialChatContext")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
