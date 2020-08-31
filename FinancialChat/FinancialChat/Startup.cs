@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +12,9 @@ using FinancialChat.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using FinancialChat.Scripts.RabbitMQScripts;
+using FinancialChat.Scripts;
+using Microsoft.AspNetCore.Http;
 
 namespace FinancialChat
 {
@@ -24,15 +27,34 @@ namespace FinancialChat
 
         public IConfiguration Configuration { get; }
 
+        private IServiceCollection services;
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            this.services = services;
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("IdentityDatabase")));
+
+            services.AddDbContext<FinancialChatContext>(options =>
+                    options.UseSqlServer(
+                        Configuration.GetConnectionString("FinancialChatContext")), ServiceLifetime.Singleton);
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddSingleton<IRabbitConsumer, RabbitConsumer>();
+
+            services.AddSingleton<IRabbitProducer, RabbitProducer>();
+
+            services.AddSingleton<MessagePublisher>();
+
+            services.AddSingleton<StockBot>();
+
             services.AddControllersWithViews();
+
             services.AddRazorPages();
         }
 
@@ -50,6 +72,7 @@ namespace FinancialChat
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

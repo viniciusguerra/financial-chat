@@ -1,0 +1,15 @@
+﻿@model IEnumerable<FinancialChat.Models.MessageModel>
+
+<div class="chat-container d-flex flex-column">
+    @foreach (var item in Model)
+    {
+        <div class="@(User.Identity.Name == item.OwnerName ? "chat-item-self align-self-end" : "chat-item-other align-self-start")">
+            <h4>
+                @Html.DisplayFor(modelItem => item.OwnerName)
+            </h4>
+            <p>
+                @Html.DisplayFor(modelItem => item.MessageBody)
+            </p>
+        </div>
+    }
+</div>

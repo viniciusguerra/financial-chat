@@ -1,0 +1,12 @@
+﻿@model FinancialChat.Models.MessageBoxViewModel
+
+<div class="message-box align-bottom d-flex flex-row justify-content-end">
+    @using (Html.BeginForm("Submit", "MessageBox", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.EditorFor(model => model.Message)
+            <input type="submit" class="btn-light" />
+        </div>
+    }
+</div>

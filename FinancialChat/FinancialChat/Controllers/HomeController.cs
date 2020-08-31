@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FinancialChat.Models;
+using FinancialChat.Scripts;
 
 namespace FinancialChat.Controllers
 {
@@ -13,17 +14,18 @@ namespace FinancialChat.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        StockBot stockBot;
+        MessagePublisher messagePublisher;
+
+        public HomeController(ILogger<HomeController> logger, StockBot stockBot, MessagePublisher messagePublisher)
         {
             _logger = logger;
+
+            this.stockBot = stockBot;
+            this.messagePublisher = messagePublisher;
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }

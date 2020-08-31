@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialChat", "FinancialChat\FinancialChat.csproj", "{336CBD93-0CF2-482E-8631-8A91938F0428}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinancialChat", "FinancialChat\FinancialChat.csproj", "{336CBD93-0CF2-482E-8631-8A91938F0428}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialChatNUnitTestProject", "FinancialChatNUnitTestProject\FinancialChatNUnitTestProject.csproj", "{AE45B205-BB98-48FC-8833-32BACA847570}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{336CBD93-0CF2-482E-8631-8A91938F0428}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{336CBD93-0CF2-482E-8631-8A91938F0428}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{336CBD93-0CF2-482E-8631-8A91938F0428}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE45B205-BB98-48FC-8833-32BACA847570}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE45B205-BB98-48FC-8833-32BACA847570}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE45B205-BB98-48FC-8833-32BACA847570}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE45B205-BB98-48FC-8833-32BACA847570}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
