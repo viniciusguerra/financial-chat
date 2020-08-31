@@ -30,6 +30,7 @@ namespace FinancialChat.Scripts
         private readonly HttpClient httpClient;
 
         public event StockBotRejectedMessageDelegate OnMessageRejected;
+        public event StockBotRejectedMessageDelegate OnStockRequestInvalid;
 
         public StockBot(IRabbitConsumer consumer, IRabbitProducer producer)
         {
@@ -77,7 +78,7 @@ namespace FinancialChat.Scripts
 
                 if(responseContentSplit[1] == ERROR_RESPONSE)
                 {
-                    ShowErrorMessage(stockId);
+                    StockRequestInvalid(stockId);
 
                     return;
                 }
@@ -91,15 +92,15 @@ namespace FinancialChat.Scripts
             }     
             else
             {
-                ShowErrorMessage(stockId);
+                StockRequestInvalid(stockId);
             }
         }
 
-        private void ShowErrorMessage(string requestedStock)
+        private void StockRequestInvalid(string requestedStock)
         {
             Debug.Write(string.Format("StockBot: Could not load data for stockId={0}", requestedStock));
 
-            OnMessageRejected?.Invoke(requestedStock);
+            OnStockRequestInvalid?.Invoke(requestedStock);
         }
     }
 }
